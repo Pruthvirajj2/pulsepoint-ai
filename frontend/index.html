@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulsePoint AI - Transform Videos into Viral Clips</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+        :root {
+            --primary: #7c3aed;
+            --primary-hover: #6d28d9;
+        }
+
+        body {
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 1rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .upload-section {
+            background: var(--card-background-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: var(--primary-hover);
+        }
+
+        .upload-area.drag-over {
+            background: rgba(124, 58, 237, 0.2);
+            border-color: var(--primary-hover);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-card {
+            background: var(--card-background-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .status-card.active {
+            display: block;
+        }
+
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .clips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .clip-card {
+            background: var(--card-background-color);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .clip-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .clip-thumbnail {
+            width: 100%;
+            aspect-ratio: 9/16;
+            background: #000;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .clip-thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .clip-info h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .clip-meta {
+            font-size: 0.9rem;
+            color: var(--muted-color);
+            margin-bottom: 1rem;
+        }
+
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .error-message {
+            background: #ef4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        progress {
+            width: 100%;
+            height: 30px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        .badge-energetic {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .badge-educational {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .badge-inspiring {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .features {
+            margin: 3rem 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <div class="hero">
+            <h1>⚡ PulsePoint AI</h1>
+            <p>Transform long-form videos into viral short-form content</p>
+            <p style="font-size: 1rem; margin-top: 0.5rem;">Using AI + Audio Analysis + Face Tracking</p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <h2 style="text-align: center; margin-bottom: 2rem;">How It Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h4>Emotional Peak Detection</h4>
+                    <p>Analyzes audio for high-energy moments and sentiment</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h4>AI-Powered Selection</h4>
+                    <p>Gemini AI identifies viral-worthy moments from transcripts</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h4>Smart Vertical Crop</h4>
+                    <p>Face tracking keeps speakers centered in 9:16 format</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h4>Dynamic Captions</h4>
+                    <p>Auto-generated hooks and headlines to stop the scroll</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <h2>Upload Your Video</h2>
+            <p>Upload a long-form video (lecture, podcast, workshop) and get 3-5 viral-ready clips</p>
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📹</div>
+                <h3>Drop your video here</h3>
+                <p>or click to browse</p>
+                <input type="file" id="fileInput" accept="video/*" class="hidden">
+            </div>
+
+            <div style="text-align: center; margin: 2rem 0;">
+                <p>── OR ──</p>
+            </div>
+
+            <label for="videoUrl">Enter Google Drive or Direct Video URL:</label>
+            <input type="url" id="videoUrl" placeholder="https://drive.google.com/file/d/..." />
+            <button id="processUrlBtn">Process from URL</button>
+        </div>
+
+        <!-- Status Section -->
+        <div class="status-card" id="statusCard">
+            <h3>Processing Your Video</h3>
+            <p id="statusMessage">Initializing...</p>
+            <div class="progress-container">
+                <progress id="progressBar" value="0" max="100"></progress>
+                <p style="text-align: center; margin-top: 0.5rem;">
+                    <span id="progressText">0%</span>
+                </p>
+            </div>
+            <div class="spinner" id="spinner"></div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden">
+            <h2>Your Viral Clips Are Ready! 🎉</h2>
+            <p>Download and share these clips on TikTok, Instagram Reels, or YouTube Shorts</p>
+
+            <div class="clips-grid" id="clipsGrid"></div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+        let currentJobId = null;
+        let statusCheckInterval = null;
+
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const videoUrlInput = document.getElementById('videoUrl');
+        const processUrlBtn = document.getElementById('processUrlBtn');
+        const statusCard = document.getElementById('statusCard');
+        const statusMessage = document.getElementById('statusMessage');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const spinner = document.getElementById('spinner');
+        const resultsSection = document.getElementById('resultsSection');
+        const clipsGrid = document.getElementById('clipsGrid');
+
+        // Upload Area Events
+        uploadArea.addEventListener('click', () => fileInput.click());
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileUpload(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileUpload(e.target.files[0]);
+            }
+        });
+
+        processUrlBtn.addEventListener('click', () => {
+            const url = videoUrlInput.value.trim();
+            if (url) {
+                handleUrlProcessing(url);
+            } else {
+                alert('Please enter a valid video URL');
+            }
+        });
+
+        async function handleFileUpload(file) {
+            if (!file.type.startsWith('video/')) {
+                alert('Please select a video file');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            showStatus('Uploading video...');
+
+            try {
+                const response = await fetch(`${API_URL}/api/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentJobId = result.job_id;
+                    startStatusPolling();
+                } else {
+                    showError('Upload failed: ' + result.message);
+                }
+            } catch (error) {
+                showError('Upload failed: ' + error.message);
+            }
+        }
+
+        async function handleUrlProcessing(url) {
+            showStatus('Starting processing from URL...');
+
+            try {
+                const response = await fetch(`${API_URL}/api/process-url`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ video_url: url })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    currentJobId = result.job_id;
+                    startStatusPolling();
+                } else {
+                    showError('Processing failed: ' + result.message);
+                }
+            } catch (error) {
+                showError('Processing failed: ' + error.message);
+            }
+        }
+
+        function showStatus(message) {
+            statusCard.classList.add('active');
+            statusMessage.textContent = message;
+            resultsSection.classList.add('hidden');
+        }
+
+        function showError(message) {
+            statusCard.classList.add('active');
+            statusMessage.innerHTML = `<div class="error-message">${message}</div>`;
+            spinner.style.display = 'none';
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+            }
+        }
+
+        function startStatusPolling() {
+            statusCheckInterval = setInterval(checkStatus, 2000);
+        }
+
+        async function checkStatus() {
+            if (!currentJobId) return;
+
+            try {
+                const response = await fetch(`${API_URL}/api/status/${currentJobId}`);
+                const status = await response.json();
+
+                statusMessage.textContent = status.message;
+                progressBar.value = status.progress;
+                progressText.textContent = `${status.progress}%`;
+
+                if (status.status === 'completed') {
+                    clearInterval(statusCheckInterval);
+                    spinner.style.display = 'none';
+                    showResults(status.clips);
+                } else if (status.status === 'failed') {
+                    clearInterval(statusCheckInterval);
+                    showError(status.message);
+                }
+            } catch (error) {
+                console.error('Status check failed:', error);
+            }
+        }
+
+        function showResults(clips) {
+            resultsSection.classList.remove('hidden');
+            clipsGrid.innerHTML = '';
+
+            clips.forEach(clip => {
+                const clipCard = createClipCard(clip);
+                clipsGrid.appendChild(clipCard);
+            });
+
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function createClipCard(clip) {
+            const card = document.createElement('div');
+            card.className = 'clip-card';
+
+            const badge = getBadgeHTML(clip.emotional_appeal);
+            const duration = Math.round(clip.duration);
+            const videoUrl = `${API_URL}/api/download/${currentJobId}/${clip.index}`;
+
+            card.innerHTML = `
+                <div class="clip-thumbnail">
+                    <video
+                        controls
+                        preload="metadata"
+                        src="${videoUrl}">
+                        Your browser does not support video playback.
+                    </video>
+                </div>
+                <div class="clip-info">
+                    <h4>Clip ${clip.index}</h4>
+                    <p><strong>${clip.headline}</strong></p>
+                    <div class="clip-meta">
+                        ${badge}
+                        <span>${duration}s</span>
+                    </div>
+                    <a href="${videoUrl}"
+                       download="${clip.filename}"
+                       role="button">
+                        Download Clip
+                    </a>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function getBadgeHTML(emotionalAppeal) {
+            const badgeClass = `badge-${emotionalAppeal}`;
+            return `<span class="badge ${badgeClass}">${emotionalAppeal}</span>`;
+        }
+    </script>
+</body>
+</html>

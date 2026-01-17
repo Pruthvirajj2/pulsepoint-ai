@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Environment variables (contains API keys)
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+uploads/
+outputs/
+temp/
+
+# Large media files (keep screen recording if small)
+*.avi
+*.mov
+*.wav
+*.mp3
+
+# Keep example files
+!.env.example
+
+# Logs
+*.log
