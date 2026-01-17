@@ -20,9 +20,9 @@ Turn a single session into a week's worth of viral marketing content!
 
 ## 🎬 Demo Video
 
-> **📹 [Watch the Demo Video Here](https://github.com/Pruthvirajj2/pulsepoint-ai/blob/main/demo.mov?raw=true)** ⬅️ Click to watch!
+> **📹 [Watch the Demo Video Here](https://github.com/Pruthvirajj2/pulsepoint-ai/blob/main/demo.mp4?raw=true)** ⬅️ Click to watch!
 
-https://github.com/Pruthvirajj2/pulsepoint-ai/assets/demo.mp4
+https://github.com/user-attachments/assets/demo.mp4
 
 *The demo shows the complete workflow: uploading a video, real-time AI processing, and downloading viral-ready clips in 9:16 vertical format.*
 
@@ -33,7 +33,7 @@ https://github.com/Pruthvirajj2/pulsepoint-ai/assets/demo.mp4
 ### Core Features
 - ✅ **Emotional Peak Detection** - Audio analysis using Librosa to detect volume spikes and pitch variations
 - ✅ **AI-Powered Content Analysis** - Google Gemini 1.5 Flash analyzes transcripts to identify viral-worthy moments
-- ✅ **Automatic Transcription** - OpenAI Whisper generates accurate timestamps and text
+- ✅ **Automatic Transcription** - AssemblyAI generates accurate timestamps and text (100 hours/month FREE!)
 - ✅ **Smart Vertical Crop** - MediaPipe face tracking keeps speakers centered in 9:16 format
 - ✅ **Dynamic Caption Generation** - AI-generated hooks and headlines for each clip
 - ✅ **Batch Processing** - Generates 3-5 optimized clips per video
@@ -81,8 +81,8 @@ https://github.com/Pruthvirajj2/pulsepoint-ai/assets/demo.mp4
 ### Prerequisites
 
 - Python 3.8 or higher
-- OpenAI API Key ([Get one here](https://platform.openai.com/api-keys))
-- Google AI API Key ([Get one here](https://makersuite.google.com/app/apikey))
+- AssemblyAI API Key - **100% FREE** ([Get one here](https://www.assemblyai.com/))
+- Google AI API Key - **100% FREE** ([Get one here](https://makersuite.google.com/app/apikey))
 - FFmpeg installed on your system
 
 ### Installation
@@ -133,9 +133,11 @@ https://github.com/Pruthvirajj2/pulsepoint-ai/assets/demo.mp4
 
    Your `.env` file should contain:
    ```env
-   OPENAI_API_KEY=sk-...your-key-here
-   GOOGLE_API_KEY=AI...your-key-here
+   ASSEMBLYAI_API_KEY=your-key-here
+   GOOGLE_API_KEY=your-key-here
    ```
+
+   **⚠️ SECURITY WARNING**: Never commit your `.env` file or share your API keys publicly!
 
 6. **Run the application**
    ```bash
@@ -252,14 +254,16 @@ Using **Librosa**, we analyze the audio track to detect:
 - Pitch variations (emphasis and excitement)
 - Silence periods (natural segmentation points)
 
-### 2. Transcription & Sentiment
-**OpenAI Whisper** generates:
+### 2. Transcription & AI Analysis
+**AssemblyAI** (100% FREE) generates:
 - Accurate transcription with word-level timestamps
 - Segment boundaries for context
+- Speaker detection and diarization
 
-**GPT** analyzes sentiment for:
+**Google Gemini** analyzes content for:
 - Emotional intensity
 - Engagement scoring
+- Viral-worthy moments
 
 ### 3. AI-Powered Selection
 **Google Gemini 1.5 Flash** processes the entire transcript to identify:
@@ -414,8 +418,8 @@ This project was created for the ByteSize Sage AI Hackathon.
 ## 🙏 Acknowledgments
 
 - **ByteSize Sage AI Hackathon** for the amazing challenge
-- **OpenAI** for Whisper transcription
-- **Google** for Gemini AI
+- **AssemblyAI** for free transcription API (100 hours/month!)
+- **Google** for free Gemini AI
 - **MediaPipe** team for face detection
 - **MoviePy** for video processing capabilities
 

@@ -39,5 +39,8 @@ temp/
 # Logs
 *.log
 
-# Allow demo video
-!demo.mov
+# Documentation with potential sensitive data
+*QUICK*.md
+
+# Allow demo video (MP4 format only)
+!demo.mp4
