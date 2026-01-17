@@ -20,11 +20,11 @@ Turn a single session into a week's worth of viral marketing content!
 
 ## 🎬 Demo Video
 
-> **📹 [Watch the Demo Video Here](DEMO_VIDEO_LINK)**
+> **📹 [Watch the Demo Video Here](https://github.com/Pruthvirajj2/pulsepoint-ai/blob/main/demo.mov?raw=true)** ⬅️ Click to watch!
 
-https://github.com/YOUR_USERNAME/pulsepoint-ai/assets/demo.mp4
+https://github.com/Pruthvirajj2/pulsepoint-ai/assets/demo.mp4
 
-*The demo video shows the complete workflow: uploading a video, the AI processing in action, and downloading the generated viral clips.*
+*The demo shows the complete workflow: uploading a video, real-time AI processing, and downloading viral-ready clips in 9:16 vertical format.*
 
 ---
 
