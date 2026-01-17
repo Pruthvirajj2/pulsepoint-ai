@@ -38,3 +38,6 @@ temp/
 
 # Logs
 *.log
+
+# Allow demo video
+!demo.mov
